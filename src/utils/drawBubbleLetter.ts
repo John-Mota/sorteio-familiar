@@ -15,37 +15,42 @@ export function drawBubbleLetter(
   letter: string,
   opts: DrawOptions,
 ): void {
-  const { fontFamily, fontWeight, inflate, strokeWidth, cellPx } = opts;
-  const S = cellPx;
+  const { fontFamily, fontWeight, strokeWidth, cellWidthPx: W, cellHeightPx: H } = opts;
 
-  ctx.clearRect(0, 0, S, S);
+  ctx.clearRect(0, 0, W, H);
 
   if (!letter || !letter.trim()) return;
 
   const char = letter.trim()[0];
 
   // ── Step 1: calibrate fontSize so the letter occupies ~88% of cell height ──
-  let fontSize = S * 0.88;
+  let fontSize = H * 0.88;
 
   const measure = (size: number) => {
-    ctx.font = `${fontWeight} ${size}px "${fontFamily}"`;
+    ctx.font = `${fontWeight} ${size}px ${fontFamily}`;
     const m = ctx.measureText(char);
-    return (m.actualBoundingBoxAscent ?? 0) + (m.actualBoundingBoxDescent ?? 0);
+    const h = (m.actualBoundingBoxAscent ?? 0) + (m.actualBoundingBoxDescent ?? 0);
+    // Para a largura, precisamos somar strokeWidth pois ele expande as bordas
+    const w = m.width + (strokeWidth * 2);
+    return { h, w };
   };
 
-  // Binary-search the correct font size (max 6 iterations)
-  const targetH = S * 0.88;
+  // Binary-search the correct font size (max 8 iterations)
+  const targetH = H * 0.88;
+  const targetW = W * 0.88;
+  
   let lo = 8;
-  let hi = S * 1.2;
+  let hi = H * 1.5;
   for (let i = 0; i < 8; i++) {
     const mid = (lo + hi) / 2;
-    if (measure(mid) < targetH) lo = mid;
+    const { h, w } = measure(mid);
+    if (h < targetH && w < targetW) lo = mid;
     else hi = mid;
   }
   fontSize = lo;
 
-  const cx = S / 2;
-  const cy = S / 2 + fontSize * 0.03;
+  const cx = W / 2;
+  const cy = H / 2 + fontSize * 0.03;
 
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
@@ -53,34 +58,20 @@ export function drawBubbleLetter(
   ctx.lineCap = 'round';
 
   const setFont = () => {
-    ctx.font = `${fontWeight} ${fontSize}px "${fontFamily}"`;
+    ctx.font = `${fontWeight} ${fontSize}px ${fontFamily}`;
   };
 
-  // ── Layer 1: thick outer black stroke ────────────────────────────────────
   setFont();
-  ctx.strokeStyle = '#111111';
-  ctx.lineWidth = (inflate + strokeWidth) * 2;
+  
+  // ── Layer 1: Black Outline ───────────────────────────────────────────────
+  // Multiply by 2 because stroke is drawn centered on the path, so half is inside.
+  // We want the full strokeWidth visible on the outside.
+  ctx.strokeStyle = '#000000';
+  ctx.lineWidth = strokeWidth * 2;
   ctx.strokeText(char, cx, cy);
 
-  // ── Layer 2: white inner stroke ──────────────────────────────────────────
-  setFont();
-  ctx.strokeStyle = '#ffffff';
-  ctx.lineWidth = inflate * 2;
-  ctx.strokeText(char, cx, cy);
-
-  // ── Layer 3: white fill (letter body) ───────────────────────────────────
-  setFont();
-  ctx.fillStyle = '#ffffff';
-  ctx.fillText(char, cx, cy);
-
-  // ── Layer 4: thin inner cut line ─────────────────────────────────────────
-  setFont();
-  ctx.strokeStyle = '#222222';
-  ctx.lineWidth = 1.8;
-  ctx.strokeText(char, cx, cy);
-
-  // ── Layer 5: final white fill (clean-up) ─────────────────────────────────
-  setFont();
+  // ── Layer 2: White Fill ──────────────────────────────────────────────────
+  // Drawn after stroke so the inside remains completely white
   ctx.fillStyle = '#ffffff';
   ctx.fillText(char, cx, cy);
 }

@@ -16,5 +16,8 @@ export interface DrawOptions {
   fontWeight: string;
   inflate: number;
   strokeWidth: number;
-  cellPx: number;
+  cellWidthPx: number;
+  cellHeightPx: number;
+  cellWidthMM: number;
+  cellHeightMM: number;
 }

@@ -22,8 +22,13 @@ const PreviewArea: React.FC<PreviewAreaProps> = ({
   fontConfig,
   strokeWidth,
 }) => {
-  // cellPx: convert heightCm (in mm) to preview pixels
-  const cellPx = Math.round(heightCm * 10 * PREV_SCALE);
+  const cellHeightMM = heightCm * 10;
+  const cellWidthMM = cellHeightMM * 0.75;
+
+  // 300 DPI for super sharp printing
+  const CANVAS_SCALE = 300 / 25.4;
+  const cellHeightPx = Math.round(cellHeightMM * CANVAS_SCALE);
+  const cellWidthPx = Math.round(cellWidthMM * CANVAS_SCALE);
 
   // Split letters into pages
   const pages = useMemo(() => {
@@ -46,16 +51,20 @@ const PreviewArea: React.FC<PreviewAreaProps> = ({
       </span>
 
       {pages.map((pageLetters, idx) => (
-        <PageSheet
-          key={idx}
-          letters={pageLetters}
-          cols={cols}
-          rows={rows}
-          cellPx={cellPx}
-          pageNumber={idx + 1}
-          fontConfig={fontConfig}
-          strokeWidth={strokeWidth}
-        />
+        <div className="page-sheet-wrapper" key={idx}>
+          <PageSheet
+            letters={pageLetters}
+            cols={cols}
+            rows={rows}
+            cellWidthPx={cellWidthPx}
+            cellHeightPx={cellHeightPx}
+            cellWidthMM={cellWidthMM}
+            cellHeightMM={cellHeightMM}
+            pageNumber={idx + 1}
+            fontConfig={fontConfig}
+            strokeWidth={strokeWidth}
+          />
+        </div>
       ))}
     </div>
   );

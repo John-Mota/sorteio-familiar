@@ -12,7 +12,7 @@ interface LetterCanvasProps {
  * Size = cellPx × cellPx.
  */
 const LetterCanvas: React.FC<LetterCanvasProps> = ({ letter, opts }) => {
-  const { cellPx } = opts;
+  const { cellWidthPx, cellHeightPx } = opts;
 
   // Stable opts reference to avoid unnecessary redraws
   const stableOpts = useMemo(() => opts, [
@@ -20,7 +20,8 @@ const LetterCanvas: React.FC<LetterCanvasProps> = ({ letter, opts }) => {
     opts.fontWeight,
     opts.inflate,
     opts.strokeWidth,
-    opts.cellPx,
+    opts.cellWidthPx,
+    opts.cellHeightPx,
   ]);
 
   const { canvasRef } = useBubbleLetter(letter, stableOpts);
@@ -28,11 +29,11 @@ const LetterCanvas: React.FC<LetterCanvasProps> = ({ letter, opts }) => {
   return (
     <canvas
       ref={canvasRef}
-      width={cellPx}
-      height={cellPx}
+      width={cellWidthPx}
+      height={cellHeightPx}
       style={{
-        width: `${cellPx}px`,
-        height: `${cellPx}px`,
+        width: `${opts.cellWidthMM}mm`,
+        height: `${opts.cellHeightMM}mm`,
         display: 'block',
       }}
     />

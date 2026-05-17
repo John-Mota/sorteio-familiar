@@ -1,8 +1,5 @@
 @import "tailwindcss";
 
-/* ── Google Fonts ───────────────────────────────────────────── */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
-
 /* ── Reset & Base ───────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -27,7 +24,7 @@ html, body, #root {
   height: 100vh;
   background: #ffffff;
   border-right: 1px solid #e2e2ee;
-  overflow-y: auto;
+  overflow-y: hidden;
   display: flex;
   flex-direction: column;
   box-shadow: 2px 0 12px rgba(0,0,0,0.06);
@@ -35,7 +32,7 @@ html, body, #root {
 }
 
 .sidebar-header {
-  padding: 20px 20px 14px;
+  padding: 16px 16px 12px;
   border-bottom: 1px solid #f0f0f8;
   background: linear-gradient(135deg, #3c3489 0%, #5147c7 100%);
   color: white;
@@ -55,10 +52,10 @@ html, body, #root {
 
 .sidebar-body {
   flex: 1;
-  padding: 16px;
+  padding: 14px 16px;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 14px;
 }
 
 .section-label {
@@ -73,7 +70,7 @@ html, body, #root {
 /* ── Letter Input ───────────────────────────────────────────── */
 .letter-textarea {
   width: 100%;
-  min-height: 90px;
+  min-height: 54px;
   padding: 10px 12px;
   border: 1.5px solid #e2e2ee;
   border-radius: 10px;
@@ -292,15 +289,26 @@ input[type='range']::-webkit-slider-thumb:hover {
 }
 
 /* ── Page Sheet ─────────────────────────────────────────────── */
-.page-sheet {
+.page-sheet-wrapper {
   width: 540px;
   height: 763px;
-  background: white;
-  box-shadow: 0 4px 24px rgba(0,0,0,0.15);
-  border-radius: 3px;
   position: relative;
   flex-shrink: 0;
-  overflow: hidden;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+  border-radius: 3px;
+  background: white;
+  margin-bottom: 32px;
+}
+
+.page-sheet {
+  width: 210mm;
+  height: 297mm;
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform-origin: top left;
+  /* 540px / (210mm in pixels at 96 DPI) */
+  transform: scale(0.680357);
 }
 
 .page-title {
@@ -373,16 +381,29 @@ input[type='range']::-webkit-slider-thumb:hover {
 
   .preview-count { display: none; }
 
-  .page-sheet {
-    width: 210mm;
-    height: 297mm;
+  @page {
+    size: A4;
+    margin: 0;
+  }
+
+  .page-sheet-wrapper {
+    width: auto;
+    height: auto;
     box-shadow: none;
-    border-radius: 0;
+    margin: 0;
+    overflow: visible;
+  }
+
+  .page-sheet {
+    transform: none;
+    position: relative;
+    width: 210mm;
+    height: 296mm; /* 1mm smaller to avoid accidental overflow triggering blank pages */
     page-break-after: always;
     break-after: page;
     margin: 0;
-    position: relative;
-    overflow: visible;
+    overflow: hidden;
+    box-sizing: border-box;
   }
 
   .page-sheet:last-child {

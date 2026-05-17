@@ -7,7 +7,10 @@ interface PageSheetProps {
   letters: string[];
   cols: number;
   rows: number;
-  cellPx: number;
+  cellWidthPx: number;
+  cellHeightPx: number;
+  cellWidthMM: number;
+  cellHeightMM: number;
   pageNumber: number;
   fontConfig: FontConfig;
   strokeWidth: number;
@@ -17,32 +20,44 @@ const PageSheet: React.FC<PageSheetProps> = ({
   letters,
   cols,
   rows,
-  cellPx,
+  cellWidthPx,
+  cellHeightPx,
+  cellWidthMM,
+  cellHeightMM,
   pageNumber,
   fontConfig,
   strokeWidth,
 }) => {
-  const padPx = PAD_MM * PREV_SCALE;
-
   const drawOpts: DrawOptions = {
     fontFamily: fontConfig.family,
     fontWeight: fontConfig.weight,
     inflate: fontConfig.inflate,
     strokeWidth,
-    cellPx,
+    cellWidthPx,
+    cellHeightPx,
+    cellWidthMM,
+    cellHeightMM,
   };
+
+  const availableWidthMM = 210 - PAD_MM * 2;
+  const availableHeightMM = 297 - PAD_MM * 2;
+
+  const gridWidthMM = cols * cellWidthMM;
+  const gridHeightMM = rows * cellHeightMM;
+
+  const topOffsetMM = PAD_MM + (availableHeightMM - gridHeightMM) / 2;
+  const leftOffsetMM = PAD_MM + (availableWidthMM - gridWidthMM) / 2;
 
   return (
     <div className="page-sheet">
-      <span className="page-title">Molde Alfabeto</span>
 
       <div
         className="letter-grid"
         style={{
-          top: padPx,
-          left: padPx,
-          gridTemplateColumns: `repeat(${cols}, ${cellPx}px)`,
-          gridTemplateRows: `repeat(${rows}, ${cellPx}px)`,
+          top: `${topOffsetMM}mm`,
+          left: `${leftOffsetMM}mm`,
+          gridTemplateColumns: `repeat(${cols}, ${cellWidthMM}mm)`,
+          gridTemplateRows: `repeat(${rows}, ${cellHeightMM}mm)`,
         }}
       >
         {letters.map((letter, idx) => (
@@ -54,7 +69,7 @@ const PageSheet: React.FC<PageSheetProps> = ({
         ))}
       </div>
 
-      <span className="page-number">p. {pageNumber}</span>
+
     </div>
   );
 };

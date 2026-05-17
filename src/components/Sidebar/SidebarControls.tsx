@@ -32,7 +32,7 @@ interface FontPickerProps {
   onSelect: (idx: number) => void;
 }
 
-const THUMB_PX = 52;
+const THUMB_PX = 38;
 
 export const FontPicker: React.FC<FontPickerProps> = ({ fonts, selectedIdx, onSelect }) => {
   return (
@@ -72,7 +72,8 @@ const FontOption: React.FC<FontOptionProps> = ({ font, isSelected, onClick }) =>
       fontWeight: font.weight,
       inflate: font.inflate,
       strokeWidth: 5,
-      cellPx: THUMB_PX,
+      cellWidthPx: THUMB_PX,
+      cellHeightPx: THUMB_PX,
     };
     drawBubbleLetter(ctx, 'A', opts);
   }, [font]);

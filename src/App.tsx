@@ -37,7 +37,7 @@ function App() {
         onPrint={handlePrint}
       />
 
-      <main style={{ flex: 1, overflow: 'hidden' }}>
+      <main style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
         <PreviewArea
           letters={letters}
           cols={grid.cols}

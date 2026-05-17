@@ -19,6 +19,14 @@ export function useBubbleLetter(letter: string, opts: DrawOptions) {
 
   useEffect(() => {
     redraw();
+    
+    // Web fonts might not be loaded when the component first mounts.
+    // Redraw the canvas once all fonts are fully loaded.
+    if ('fonts' in document) {
+      document.fonts.ready.then(() => {
+        redraw();
+      });
+    }
   }, [redraw]);
 
   return { canvasRef, redraw };
