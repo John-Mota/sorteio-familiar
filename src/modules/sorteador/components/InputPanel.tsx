@@ -44,8 +44,8 @@ const InputPanel: React.FC<InputPanelProps> = ({
   };
 
   return (
-    <div className="w-full lg:w-[280px] md:w-[260px] flex-shrink-0 bg-bg-surface border-r border-border h-full flex flex-col p-5 overflow-y-auto">
-      <div className="flex bg-bg-elevated p-1 rounded-xl mb-6 border border-border">
+    <div   style={{ padding: "5px" }} className="w-full h-full gap-5 flex-shrink-0 bg-bg-surface border-r border-border flex flex-col p-8 overflow-y-auto">
+      <div className="flex bg-bg-elevated p-1.5 rounded-xl mb-8 border border-border">
         <button
           onClick={() => onModeChange('names')}
           className={`flex-1 py-1.5 text-sm font-medium rounded-lg transition-all ${
@@ -68,19 +68,20 @@ const InputPanel: React.FC<InputPanelProps> = ({
         </button>
       </div>
 
-      <div className="flex-1 flex flex-col min-h-0">
+      <div className="flex-1 flex gap-5 flex-col min-h-0">
         {mode === 'names' ? (
-          <div className="flex flex-col h-full">
-            <label className="text-xs font-semibold text-text-muted uppercase tracking-wider mb-2">
+          <div className="flex flex-col h-full gap-5">
+            <label className="block text-xs font-semibold text-text-muted uppercase tracking-wider mb-3">
               Participantes
             </label>
             <textarea
-              value={namesText}
-              onChange={(e) => setNamesText(e.target.value)}
-              placeholder="Digite um nome por linha&#10;Maria&#10;João&#10;Ana"
-              className="flex-1 min-h-[150px] w-full bg-bg-base border border-border rounded-xl p-3 text-sm text-text-primary resize-none outline-none focus:border-accent focus:ring-1 focus:ring-accent transition-all"
-            />
-            <div className="text-xs text-text-muted mt-2 text-right">
+  value={namesText}
+  onChange={(e) => setNamesText(e.target.value)}
+  placeholder="Digite um nome por linha&#10;Maria&#10;João&#10;Ana"
+  style={{ padding: "5px" }}
+  className="flex-1 min-h-[150px] w-full bg-bg-base border border-border rounded-xl text-sm text-text-primary resize-none outline-none focus:border-accent focus:ring-1 focus:ring-accent transition-all leading-[2]"
+/>
+            <div className="text-xs text-text-muted mt-3 text-right">
               {entriesCount} participante(s)
             </div>
           </div>
@@ -123,7 +124,7 @@ const InputPanel: React.FC<InputPanelProps> = ({
         )}
       </div>
 
-      <div className="mt-6 pt-6 border-t border-border flex flex-col gap-4">
+      <div className="mt-8 pt-8 border-t border-border flex flex-col gap-6">
         <label className="flex items-center gap-3 cursor-pointer group">
           <div className="relative">
             <input

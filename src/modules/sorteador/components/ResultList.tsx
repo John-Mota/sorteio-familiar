@@ -26,8 +26,8 @@ const ResultList: React.FC<ResultListProps> = ({ drawnHistory, onRemove }) => {
   };
 
   return (
-    <div className="w-full lg:w-[280px] bg-bg-surface border-l border-border h-full flex flex-col p-5 overflow-hidden">
-      <div className="flex items-center justify-between mb-4">
+    <div style={{ padding: "5px" }} className="w-full gap-5 h-full bg-bg-surface border-l border-border flex flex-col p-8 overflow-hidden">
+      <div className="flex items-center justify-between mb-8">
         <h2 className="text-sm font-semibold text-text-primary flex items-center gap-2">
           🏆 Ordem dos Sorteados
         </h2>
@@ -43,7 +43,7 @@ const ResultList: React.FC<ResultListProps> = ({ drawnHistory, onRemove }) => {
             <p className="text-sm">Nenhum sorteio ainda</p>
           </div>
         ) : (
-          <div className="flex flex-col gap-2">
+          <div className="flex flex-col gap-4">
             {drawnHistory.map((entry, index) => {
               const order = drawnHistory.length - index;
               const isRecent = index === 0;
@@ -51,7 +51,7 @@ const ResultList: React.FC<ResultListProps> = ({ drawnHistory, onRemove }) => {
               return (
                 <div 
                   key={`${entry.id}-${index}`}
-                  className={`flex items-center justify-between p-3 rounded-xl bg-bg-elevated border transition-all ${
+                  className={`flex items-center justify-between p-4 rounded-xl bg-bg-elevated border transition-all ${
                     isRecent ? 'border-accent shadow-[0_0_15px_var(--accent-glow)]' : 'border-border'
                   }`}
                   style={{ animation: 'slideInRight 300ms ease-out' }}
@@ -82,7 +82,7 @@ const ResultList: React.FC<ResultListProps> = ({ drawnHistory, onRemove }) => {
         )}
       </div>
 
-      <div className="mt-4 pt-4 border-t border-border">
+      <div className="mt-8 pt-8 border-t border-border">
         <button
           onClick={handleExport}
           disabled={drawnHistory.length === 0}

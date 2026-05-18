@@ -42,7 +42,7 @@ const SorteadorLayout: React.FC = () => {
       {/* THREE COLUMNS: Responsive hiding based on mobileTab on small screens */}
       
       {/* Left Column (Input) */}
-      <div className={`${mobileTab === 'input' ? 'flex' : 'hidden'} md:flex flex-col flex-1 md:flex-none md:w-[260px] lg:w-[280px] h-full`}>
+      <div className={`${mobileTab === 'input' ? 'flex' : 'hidden'} md:flex flex-col flex-1 md:flex-none md:w-[300px] lg:w-[360px] h-full`}>
         <InputPanel
           mode={sorteador.mode}
           onModeChange={sorteador.setMode}
@@ -72,7 +72,7 @@ const SorteadorLayout: React.FC = () => {
         </div>
 
         {/* Right Column (Results) */}
-        <div className={`${mobileTab === 'results' ? 'flex' : 'hidden'} md:flex lg:flex flex-col flex-1 md:flex-none lg:w-[280px] h-full lg:border-l-0 md:border-t lg:border-t-0 border-border`}>
+        <div className={`${mobileTab === 'results' ? 'flex' : 'hidden'} md:flex lg:flex flex-col flex-1 md:flex-none lg:w-[360px] h-full lg:border-l-0 md:border-t lg:border-t-0 border-border`}>
           <ResultList
             drawnHistory={sorteador.drawnHistory}
             onRemove={sorteador.removeFromHistory}

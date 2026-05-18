@@ -23,8 +23,8 @@ const SorteioDisplay: React.FC<SorteioDisplayProps> = ({
   const isResult = !isAnimating && !!currentDisplay;
 
   return (
-    <div className="flex-1 flex flex-col items-center justify-center p-6 bg-bg-base relative overflow-hidden">
-      <div className={`relative flex items-center justify-center w-full max-w-2xl aspect-[3/2] sm:aspect-auto sm:h-80 rounded-2xl transition-all duration-300 ${
+    <div   style={{ padding: "5px" }} className="gap-5 flex-1 flex flex-col items-center justify-center p-12 bg-bg-base relative overflow-hidden">
+      <div className={`relative flex items-center justify-center w-full max-w-4xl aspect-[3/2] sm:aspect-auto sm:h-[400px] rounded-3xl transition-all duration-300 ${
         isAnimating ? 'border-2 border-accent shadow-[0_0_40px_var(--accent-glow)]' : 'border border-border bg-bg-surface shadow-sm'
       }`} style={isAnimating ? { animation: 'glowPulse 0.8s ease-in-out infinite' } : {}}>
         
