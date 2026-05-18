@@ -12,8 +12,7 @@ const ResultList: React.FC<ResultListProps> = ({ drawnHistory, onRemove }) => {
     
     // Formato: "1º - Maria\n2º - João"
     const text = drawnHistory
-      .map((entry, index) => `${drawnHistory.length - index}º - ${entry.value}`)
-      .reverse() // Reverse so the 1st drawn is at the top of the file
+      .map((entry, index) => `${index + 1}º - ${entry.value}`)
       .join('\n');
       
     const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
@@ -45,16 +44,16 @@ const ResultList: React.FC<ResultListProps> = ({ drawnHistory, onRemove }) => {
         ) : (
           <div className="flex flex-col gap-4">
             {drawnHistory.map((entry, index) => {
-              const order = drawnHistory.length - index;
-              const isRecent = index === 0;
+              const order = index + 1;
+              const isRecent = index === drawnHistory.length - 1;
               
               return (
                 <div 
                   key={`${entry.id}-${index}`}
-                  className={`flex items-center justify-between p-4 rounded-xl bg-bg-elevated border transition-all ${
+                  className={`flex items-center justify-between p-4 rounded-sm gap-5 bg-bg-elevated border transition-all ${
                     isRecent ? 'border-accent shadow-[0_0_15px_var(--accent-glow)]' : 'border-border'
                   }`}
-                  style={{ animation: 'slideInRight 300ms ease-out' }}
+                  style={{ animation: 'slideInRight 300ms ease-out', padding: "5px" }}
                 >
                   <div className="flex items-center gap-3 overflow-hidden">
                     <span className="text-xs font-bold text-text-muted w-6 flex-shrink-0">
