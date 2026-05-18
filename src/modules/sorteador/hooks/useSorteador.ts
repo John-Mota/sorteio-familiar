@@ -93,7 +93,7 @@ export function useSorteador() {
                 e.id === winner.id ? { ...e, drawn: true } : e
               );
               
-              newHistory = [winner, ...newHistory];
+              newHistory = [...newHistory, winner];
 
               // Check if exactly 1 item is left
               const remaining = updatedEntries.filter((e) => !e.drawn);
@@ -103,10 +103,10 @@ export function useSorteador() {
                   e.id === lastOne.id ? { ...e, drawn: true } : e
                 );
                 // Auto-add the last one to history immediately after the winner
-                newHistory = [lastOne, ...newHistory];
+                newHistory = [...newHistory, lastOne];
               }
             } else {
-              newHistory = [winner, ...newHistory];
+              newHistory = [...newHistory, winner];
             }
             
             return {
