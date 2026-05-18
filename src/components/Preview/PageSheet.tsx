@@ -1,7 +1,7 @@
 import React from 'react';
 import LetterCanvas from './LetterCanvas';
 import type { FontConfig, DrawOptions } from '../../types';
-import { PAD_MM, PREV_SCALE } from '../../utils/constants';
+import { PAD_MM } from '../../utils/constants';
 
 interface PageSheetProps {
   letters: string[];
@@ -24,8 +24,7 @@ const PageSheet: React.FC<PageSheetProps> = ({
   cellHeightPx,
   cellWidthMM,
   cellHeightMM,
-  pageNumber,
-  fontConfig,
+    fontConfig,
   strokeWidth,
 }) => {
   const drawOpts: DrawOptions = {

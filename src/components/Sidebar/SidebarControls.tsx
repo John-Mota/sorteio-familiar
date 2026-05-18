@@ -74,6 +74,8 @@ const FontOption: React.FC<FontOptionProps> = ({ font, isSelected, onClick }) =>
       strokeWidth: 5,
       cellWidthPx: THUMB_PX,
       cellHeightPx: THUMB_PX,
+      cellWidthMM: 10,
+      cellHeightMM: 10,
     };
     drawBubbleLetter(ctx, 'A', opts);
   }, [font]);

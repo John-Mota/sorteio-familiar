@@ -5,7 +5,7 @@ import {
   SizeControl,
   StrokeControl,
 } from './SidebarControls';
-import type { FontConfig, GridResult } from '../../types';
+import type { GridResult } from '../../types';
 import { FONTS } from '../../utils/constants';
 
 interface SidebarProps {

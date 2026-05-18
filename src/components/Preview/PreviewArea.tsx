@@ -1,7 +1,6 @@
 import React, { useMemo } from 'react';
 import PageSheet from './PageSheet';
 import type { FontConfig } from '../../types';
-import { PREV_SCALE } from '../../utils/constants';
 
 interface PreviewAreaProps {
   letters: string[];
