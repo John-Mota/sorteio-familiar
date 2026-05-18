@@ -65,9 +65,9 @@ const SorteioDisplay: React.FC<SorteioDisplayProps> = ({
       <div className="mt-10 w-full max-w-md">
         <button
           onClick={onDraw}
-          disabled={!hasEntries || (!hasAvailableEntries && !isAnimating) || isAnimating}
+          disabled={totalEntries < 2 || (!hasAvailableEntries && !isAnimating) || isAnimating}
           className={`w-full py-4 px-8 rounded-2xl text-xl font-bold transition-all duration-200 flex items-center justify-center gap-3 ${
-            isAnimating || !hasEntries || (!hasAvailableEntries && !isAnimating)
+            isAnimating || totalEntries < 2 || (!hasAvailableEntries && !isAnimating)
               ? 'bg-bg-elevated text-text-muted cursor-not-allowed border border-border'
               : 'bg-accent text-white hover:bg-accent-hover shadow-[0_4px_14px_var(--accent-glow)] hover:-translate-y-1 hover:shadow-[0_6px_20px_var(--accent-glow)]'
           }`}

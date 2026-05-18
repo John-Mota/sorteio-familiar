@@ -45,10 +45,10 @@ const InputPanel: React.FC<InputPanelProps> = ({
 
   return (
     <div   style={{ padding: "5px" }} className="w-full h-full gap-5 flex-shrink-0 bg-bg-surface border-r border-border flex flex-col p-8 overflow-y-auto">
-      <div className="flex bg-bg-elevated p-1.5 rounded-xl mb-8 border border-border">
+      <div className="flex bg-bg-elevated p-1.5 rounded-sm mb-8 border border-border">
         <button
           onClick={() => onModeChange('names')}
-          className={`flex-1 py-1.5 text-sm font-medium rounded-lg transition-all ${
+          className={`flex-1 py-1.5 text-sm font-medium rounded-sm transition-all ${
             mode === 'names'
               ? 'bg-bg-surface text-text-primary shadow-sm border border-border'
               : 'text-text-muted hover:text-text-primary'
@@ -58,7 +58,7 @@ const InputPanel: React.FC<InputPanelProps> = ({
         </button>
         <button
           onClick={() => onModeChange('numbers')}
-          className={`flex-1 py-1.5 text-sm font-medium rounded-lg transition-all ${
+          className={`flex-1 py-1.5 text-sm font-medium rounded-sm transition-all ${
             mode === 'numbers'
               ? 'bg-bg-surface text-text-primary shadow-sm border border-border'
               : 'text-text-muted hover:text-text-primary'

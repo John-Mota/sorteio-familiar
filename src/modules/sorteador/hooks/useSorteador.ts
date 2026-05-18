@@ -62,7 +62,7 @@ export function useSorteador() {
   const draw = useCallback(() => {
     setState((prev) => {
       const available = prev.entries.filter((e) => !e.drawn);
-      if (available.length === 0 || prev.isAnimating) return prev;
+      if (available.length < 2 || prev.isAnimating) return prev;
 
       // Start animation
       const winnerIndex = Math.floor(Math.random() * available.length);
@@ -84,16 +84,37 @@ export function useSorteador() {
           timerRef.current = null;
           
           setState((curr) => {
-            const updatedEntries = curr.entries.map((e) => 
-              (e.id === winner.id && curr.removeAfterDraw) ? { ...e, drawn: true } : e
-            );
+            let updatedEntries = [...curr.entries];
+            let newHistory = [...curr.drawnHistory];
+
+            if (curr.removeAfterDraw) {
+              // Mark winner as drawn
+              updatedEntries = updatedEntries.map((e) => 
+                e.id === winner.id ? { ...e, drawn: true } : e
+              );
+              
+              newHistory = [winner, ...newHistory];
+
+              // Check if exactly 1 item is left
+              const remaining = updatedEntries.filter((e) => !e.drawn);
+              if (remaining.length === 1) {
+                const lastOne = remaining[0];
+                updatedEntries = updatedEntries.map((e) =>
+                  e.id === lastOne.id ? { ...e, drawn: true } : e
+                );
+                // Auto-add the last one to history immediately after the winner
+                newHistory = [lastOne, ...newHistory];
+              }
+            } else {
+              newHistory = [winner, ...newHistory];
+            }
             
             return {
               ...curr,
               isAnimating: false,
               currentDisplay: winner.value,
               entries: updatedEntries,
-              drawnHistory: [winner, ...curr.drawnHistory],
+              drawnHistory: newHistory,
             };
           });
         } else {
