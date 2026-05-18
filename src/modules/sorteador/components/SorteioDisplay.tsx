@@ -13,7 +13,6 @@ interface SorteioDisplayProps {
 const SorteioDisplay: React.FC<SorteioDisplayProps> = ({
   isAnimating,
   currentDisplay,
-  hasEntries,
   hasAvailableEntries,
   onDraw,
   drawnHistoryLength,
@@ -88,3 +87,5 @@ const SorteioDisplay: React.FC<SorteioDisplayProps> = ({
 };
 
 export default SorteioDisplay;
+
+
